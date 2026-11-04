@@ -96,7 +96,7 @@ int reduz(int num) {
 }
 int calcular_amor(std::string nome1, std::string nome2) {
     std::deque <int> d; std::set <char> ja_usados;
-    // formacao do deque inicial (novo)
+
     for (char c : nome1 + nome2) {
         if (c != ' ' && ja_usados.count(c)) continue;
         int k = std::count(nome1.begin(), nome1.end(), c) +
@@ -104,8 +104,6 @@ int calcular_amor(std::string nome1, std::string nome2) {
         d.push_back(reduz(k));
         ja_usados.insert(c);
     }
-
-    // vai e volta dos deques
 
     while (d.size() > 2) {
         std::deque<int> novo;
