@@ -66,7 +66,7 @@ int reduz(int num) {
     while (num > 9) {num = num % 10 + num / 10;}
     return num;
 }
-int calcular_amor(std::string nome1, std::string nome2) {
+int calcular_amor(const std::string nome1, const std::string nome2) {
     std::deque <int> d; std::set <char> ja_usados;
 
     for (char c : nome1 + nome2) {
