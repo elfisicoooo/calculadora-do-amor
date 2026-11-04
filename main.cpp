@@ -32,8 +32,8 @@ void verifica_opcao(char& opcao)  {
     }
 }
 void definir_nomes(std::string& nome1) {
-    bool def1 = false, def2 = false;
-    // define nome1
+    bool def1 = false;
+
     std::string tentativa;
     std::getline(std::cin, tentativa);
 
@@ -70,7 +70,7 @@ int calcular_amor(std::string nome1, std::string nome2) {
     std::deque <int> d; std::set <char> ja_usados;
 
     for (char c : nome1 + nome2) {
-        if (c != ' ' && ja_usados.count(c)) continue;
+        if (c == ' ' || ja_usados.count(c)) continue;
         int k = std::count(nome1.begin(), nome1.end(), c) +
                 std::count(nome2.begin(), nome2.end(), c); 
         d.push_back(reduz(k));
@@ -106,8 +106,10 @@ int main() {
         std::cout << "Você quer continuar? (1 para continuar e 2 para sair) ";
         verifica_opcao(opcao);
 
-        if (opcao == '2') {
-            std::cout << "Programa encerrado... nos vemos em breve!";
-        }
+        if (opcao != '1') break;
+    }
+
+    if (opcao == '2') {
+        std::cout << "Programa encerrado... nos vemos em breve!";
     }
 }
