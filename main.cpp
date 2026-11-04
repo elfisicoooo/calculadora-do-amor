@@ -31,11 +31,10 @@ void verifica_opcao(char& opcao)  {
         }
     }
 }
-void definir_nomes(std::string& nome1, std::string& nome2) {
+void definir_nomes(std::string& nome1) {
     bool def1 = false, def2 = false;
     // define nome1
     std::string tentativa;
-    std::cout << "Insira o nome da primeira pessoa. Esse nome não pode ter letras minúsculas, nem acentos e não pode começar com espaços: ";
     std::getline(std::cin, tentativa);
 
     while (!def1) {
@@ -61,34 +60,7 @@ void definir_nomes(std::string& nome1, std::string& nome2) {
             }
         }
     }
-    // define nome2
-    std::cout << "Insira o nome da segunda pessoa. Esse nome não pode ter letras minúsculas, nem acentos e não pode começar com espaços: ";
-    std::getline(std::cin, tentativa);
 
-    while (!def2) {
-        if (tentativa.size() < 1 || tentativa[0] == ' ') {
-            std::cout << "\nOpção inválida. O primeiro caractere do nome não pode ser um espaço/o nome deve haver 1 ou mais caractere.\n";
-            std::cout << "Tente novamente: ";
-            std::getline(std::cin, tentativa);
-        } else {
-            bool caracteres_validos = true;
-            for (char c : tentativa) {
-                if (c != ' ' && (c < 'A' || c > 'Z')) {
-                    std::cout << "\nOpção inválida. O nome precisa ser formado por letras maiúsculas do alfabeto latino e por espaços, mas sem acentos.\n";
-                    std::cout << "Tente novamente: ";
-                    std::getline(std::cin, tentativa);
-                    caracteres_validos = false;
-                    break;
-                }
-            }
-
-            if (caracteres_validos) {
-                nome2 = tentativa;
-                std::cout << "====================================================================================================\n";
-                def2 = true;
-            }
-        }
-    }
 }
 int reduz(int num) {
     while (num > 9) {num = num % 10 + num / 10;}
@@ -125,9 +97,17 @@ int main() {
     exibe_menu(); verifica_opcao(opcao);
 
     while (opcao == '1') {
-        definir_nomes(nome1, nome2); 
+        std::cout << "Insira o nome da primeira pessoa. Esse nome não pode ter letras minúsculas, nem acentos e não pode começar com espaços: ";
+        definir_nomes(nome1); 
+        std::cout << "Insira o nome da segunda pessoa. Esse nome não pode ter letras minúsculas, nem acentos e não pode começar com espaços: ";
+        definir_nomes(nome2); 
+
         std::cout << "RESULTADO: A possibilidade de " << nome1 << " e " << nome2 << " ficarem juntos é de " << std::max(calcular_amor(nome1, nome2), calcular_amor(nome2, nome1)) << "%.\n";
         std::cout << "Você quer continuar? (1 para continuar e 2 para sair) ";
         verifica_opcao(opcao);
+
+        if (opcao == '2') {
+            std::cout << "Programa encerrado... nos vemos em breve!";
+        }
     }
 }
