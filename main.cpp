@@ -2,6 +2,7 @@
 #include <string>
 #include <set>
 #include <deque>
+#include <cctype>
 #include <algorithm>
 
 void exibe_menu() {
@@ -44,9 +45,13 @@ void definir_nomes(std::string& nome1) {
             std::getline(std::cin, tentativa);
         } else {
             bool caracteres_validos = true;
+            for (char& c : tentativa) {
+                c = std::toupper(static_cast<unsigned char> (c));
+            }
+
             for (char c : tentativa) {
                 if (c != ' ' && (c < 'A' || c > 'Z')) {
-                    std::cout << "\nOpção inválida. O nome precisa ser formado por letras maiúsculas do alfabeto latino e por espaços, mas sem acentos.\n";
+                    std::cout << "\nOpção inválida. O nome precisa ser formado por letras do alfabeto latino e por espaços, mas sem acentos.\n";
                     std::cout << "Tente novamente: ";
                     std::getline(std::cin, tentativa);
                     caracteres_validos = false;
@@ -92,18 +97,33 @@ int calcular_amor(const std::string nome1, const std::string nome2) {
     return resultado;
 }
 
+void exibe_resultado(const std::string nome1, const std::string nome2, const int a) {
+    std::cout << "\nRESULTADO: A possibilidade de " << nome1 << " e " << nome2 << " ficarem juntos é de " << a << "%.\n";
+    if (a < 25) {
+        std::cout << "Talvez seja melhor vocês continuarem na amizade...\n";
+    } else if (a < 45) {
+        std::cout << "Não perca as esperanças, há possibilidades...\n";
+    } else if (a < 65) {
+        std::cout << "Estou sentindo um climinha no ar...\n";
+    } else if (a < 85) {
+        std::cout << "Vocês já são almas gêmeas, mas talvez falte avisar a outra parte...\n";
+    } else {
+        std::cout << "Eita... já marcaram o casamento?\n";
+    }
+}
+
 int main() {
     char opcao; std::string nome1, nome2;
     exibe_menu(); verifica_opcao(opcao);
 
     while (opcao == '1') {
-        std::cout << "Insira o nome da primeira pessoa. Esse nome não pode ter letras minúsculas, nem acentos e não pode começar com espaços: ";
+        std::cout << "Insira o nome da primeira pessoa. Esse nome não pode ter acentos e não pode começar com espaços: ";
         definir_nomes(nome1); 
-        std::cout << "Insira o nome da segunda pessoa. Esse nome não pode ter letras minúsculas, nem acentos e não pode começar com espaços: ";
+        std::cout << "Insira o nome da segunda pessoa. Esse nome não pode ter acentos e não pode começar com espaços: ";
         definir_nomes(nome2); 
 
-        std::cout << "RESULTADO: A possibilidade de " << nome1 << " e " << nome2 << " ficarem juntos é de " << std::max(calcular_amor(nome1, nome2), calcular_amor(nome2, nome1)) << "%.\n";
-        std::cout << "Você quer continuar? (1 para continuar e 2 para sair) ";
+        exibe_resultado(nome1, nome2, std::max(calcular_amor(nome1, nome2), calcular_amor(nome2, nome1)));
+        std::cout << "\nVocê quer continuar? (1 para continuar e 2 para sair) ";
         verifica_opcao(opcao);
 
         if (opcao != '1') break;
