@@ -12,8 +12,7 @@ void exibe_menu() {
     std::cout << "Se sim, então você está no lugar certo! Basta inserir os nomes que o resultado será exibido na hora!\n\n";
     std::cout << "Opções: \n";
     std::cout << "1. Calcular a porcentagem do amor\n";
-    std::cout << "2. Sair do programa\n";
-    std::cout << "====================================================================================================\n";
+    std::cout << "2. Sair do programa\n\n";
     std::cout << "Insira a opção: ";
 }
 void verifica_opcao(char& opcao)  {
